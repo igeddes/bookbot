@@ -27,24 +27,27 @@ def load_book(book_path: str) -> str:
 
 
 def book_report(book_path: str) -> None:
+    print(f"--- Begin report of {book_path} ---\n")
+
     try:
         book_contents = load_book(book_path)
+
     except IOError as e:
         print(f"Report not generated as book could not be loaded: \n {e}")
+
     else:
-        print(f"--- Begin report of {book_path} ---\n")
         print(f"Book contains {count_words(book_contents)} words and the breakdown")
         print("of letters looks like:\n")
 
         char_counts = count_chars(book_contents)
 
-        letters = list(char_counts.keys())
+        letters = [char for char in char_counts if char.isalpha()]
         letters.sort()
 
         for letter in letters:
-            if letter >= "a" and letter <= "z":
-                print(f"    {letter}:    {char_counts[letter]}")
+            print(f"    {letter}:    {char_counts[letter]}")
 
+    finally:
         print("\n\n--- Report complete ---")
 
 
